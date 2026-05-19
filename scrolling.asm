@@ -21,11 +21,11 @@
 ; TO8 PARAMS TO FILL
 ; ============================================================
 
-GATE_MODE       EQU $46
+GATE_MODE       EQU $26
 BORDER_COLOR    EQU $00
 
-VRAM_PLAN_A     EQU $4000
-VRAM_PLAN_B     EQU $6000
+VRAM_PLAN_A     EQU $0000
+VRAM_PLAN_B     EQU $2000
 SCREEN_STRIDE   EQU 40
 
 ; ============================================================
@@ -80,23 +80,21 @@ TILE_MOTIF5     EQU 31
 ; CODE
 ; ============================================================
 
-                ORG $A000
+                ORG     $A000
+                lda     #$61
+                tfr     a,dp
+
+                orcc    #$50
+
 
 start:
-                JSR init_video
+                JSR InitScreen
                 JSR init_engine
 
 main_loop:
                 JSR update_camera_auto
                 JSR render_viewport_optimized
                 BRA main_loop
-
-init_video:
-                LDA #GATE_MODE
-                STA DISPLAY_CTRL
-                LDA #BORDER_COLOR
-                STA GA_SYS2
-                RTS
 
 init_engine:
                 CLRA
@@ -133,7 +131,7 @@ compute_camera:
                 RTS
 
 render_viewport_optimized:
-                JSR compute_camera
+                BSR compute_camera
 
                 LDA #0
                 STA row_counter
@@ -182,7 +180,7 @@ rv_col_loop:
                 LDA ,X
                 STA tmp0
 
-                JSR get_tile_shift_ptr
+                BSR get_tile_shift_ptr
 
                 ; parity on world column
                 LDD world_col
@@ -191,12 +189,12 @@ rv_col_loop:
 
 rv_to_b:
                 LDY dst_ptr_b
-                JSR draw_tile_8x8_2bytes
+                BSR draw_tile_8x8_2bytes
                 BRA rv_after
 
 rv_to_a:
                 LDY dst_ptr_a
-                JSR draw_tile_8x8_2bytes
+                BSR draw_tile_8x8_2bytes
 
 rv_after:
                 LDD map_ptr
@@ -285,6 +283,9 @@ draw_tile_8x8_2bytes:
                 LDD ,X++
                 STD ,Y
                 RTS
+
+
+                include "lib/vbl.asm"
 
 ; ============================================================
 ; TABLES

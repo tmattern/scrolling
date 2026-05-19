@@ -4,6 +4,7 @@
         setdp   $61      ; Configuration page directe à $61xx
         org     $6100    ; Adresse de début des variables
 
+current_page    RMB 1
 
 cam_x           RMB 2
 tile_x          RMB 2
