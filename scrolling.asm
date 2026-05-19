@@ -385,92 +385,92 @@ tile_addr_table:
 ; Parameters are referenced with \1..\9
 ; ============================================================
 
-SHIFT0   MACRO
-        FCB ((\1<<8)>>8)&$FF,((\1<<8)>>0)&$FF
-        FCB ((\2<<8)>>8)&$FF,((\2<<8)>>0)&$FF
-        FCB ((\3<<8)>>8)&$FF,((\3<<8)>>0)&$FF
-        FCB ((\4<<8)>>8)&$FF,((\4<<8)>>0)&$FF
-        FCB ((\5<<8)>>8)&$FF,((\5<<8)>>0)&$FF
-        FCB ((\6<<8)>>8)&$FF,((\6<<8)>>0)&$FF
-        FCB ((\7<<8)>>8)&$FF,((\7<<8)>>0)&$FF
-        FCB ((\8<<8)>>8)&$FF,((\8<<8)>>0)&$FF
+SHIFT0  MACRO
+        FCB \1,0
+        FCB \2,0
+        FCB \3,0
+        FCB \4,0
+        FCB \5,0
+        FCB \6,0
+        FCB \7,0
+        FCB \8,0
         ENDM
 
-SHIFT1   MACRO
-        FCB ((\1<<7)>>8)&$FF,((\1<<7)>>0)&$FF
-        FCB ((\2<<7)>>8)&$FF,((\2<<7)>>0)&$FF
-        FCB ((\3<<7)>>8)&$FF,((\3<<7)>>0)&$FF
-        FCB ((\4<<7)>>8)&$FF,((\4<<7)>>0)&$FF
-        FCB ((\5<<7)>>8)&$FF,((\5<<7)>>0)&$FF
-        FCB ((\6<<7)>>8)&$FF,((\6<<7)>>0)&$FF
-        FCB ((\7<<7)>>8)&$FF,((\7<<7)>>0)&$FF
-        FCB ((\8<<7)>>8)&$FF,((\8<<7)>>0)&$FF
+SHIFT1  MACRO
+        FCB (\1/2),((\1%2)*128)
+        FCB (\2/2),((\2%2)*128)
+        FCB (\3/2),((\3%2)*128)
+        FCB (\4/2),((\4%2)*128)
+        FCB (\5/2),((\5%2)*128)
+        FCB (\6/2),((\6%2)*128)
+        FCB (\7/2),((\7%2)*128)
+        FCB (\8/2),((\8%2)*128)
         ENDM
 
-SHIFT2   MACRO
-        FCB ((\1<<6)>>8)&$FF,((\1<<6)>>0)&$FF
-        FCB ((\2<<6)>>8)&$FF,((\2<<6)>>0)&$FF
-        FCB ((\3<<6)>>8)&$FF,((\3<<6)>>0)&$FF
-        FCB ((\4<<6)>>8)&$FF,((\4<<6)>>0)&$FF
-        FCB ((\5<<6)>>8)&$FF,((\5<<6)>>0)&$FF
-        FCB ((\6<<6)>>8)&$FF,((\6<<6)>>0)&$FF
-        FCB ((\7<<6)>>8)&$FF,((\7<<6)>>0)&$FF
-        FCB ((\8<<6)>>8)&$FF,((\8<<6)>>0)&$FF
+SHIFT2  MACRO
+        FCB (\1/4),((\1%4)*64)
+        FCB (\2/4),((\2%4)*64)
+        FCB (\3/4),((\3%4)*64)
+        FCB (\4/4),((\4%4)*64)
+        FCB (\5/4),((\5%4)*64)
+        FCB (\6/4),((\6%4)*64)
+        FCB (\7/4),((\7%4)*64)
+        FCB (\8/4),((\8%4)*64)
         ENDM
 
-SHIFT3   MACRO
-        FCB ((\1<<5)>>8)&$FF,((\1<<5)>>0)&$FF
-        FCB ((\2<<5)>>8)&$FF,((\2<<5)>>0)&$FF
-        FCB ((\3<<5)>>8)&$FF,((\3<<5)>>0)&$FF
-        FCB ((\4<<5)>>8)&$FF,((\4<<5)>>0)&$FF
-        FCB ((\5<<5)>>8)&$FF,((\5<<5)>>0)&$FF
-        FCB ((\6<<5)>>8)&$FF,((\6<<5)>>0)&$FF
-        FCB ((\7<<5)>>8)&$FF,((\7<<5)>>0)&$FF
-        FCB ((\8<<5)>>8)&$FF,((\8<<5)>>0)&$FF
+SHIFT3  MACRO
+        FCB (\1/8),((\1%8)*32)
+        FCB (\2/8),((\2%8)*32)
+        FCB (\3/8),((\3%8)*32)
+        FCB (\4/8),((\4%8)*32)
+        FCB (\5/8),((\5%8)*32)
+        FCB (\6/8),((\6%8)*32)
+        FCB (\7/8),((\7%8)*32)
+        FCB (\8/8),((\8%8)*32)
         ENDM
 
-SHIFT4   MACRO
-        FCB ((\1<<4)>>8)&$FF,((\1<<4)>>0)&$FF
-        FCB ((\2<<4)>>8)&$FF,((\2<<4)>>0)&$FF
-        FCB ((\3<<4)>>8)&$FF,((\3<<4)>>0)&$FF
-        FCB ((\4<<4)>>8)&$FF,((\4<<4)>>0)&$FF
-        FCB ((\5<<4)>>8)&$FF,((\5<<4)>>0)&$FF
-        FCB ((\6<<4)>>8)&$FF,((\6<<4)>>0)&$FF
-        FCB ((\7<<4)>>8)&$FF,((\7<<4)>>0)&$FF
-        FCB ((\8<<4)>>8)&$FF,((\8<<4)>>0)&$FF
+SHIFT4  MACRO
+        FCB (\1/16),((\1%16)*16)
+        FCB (\2/16),((\2%16)*16)
+        FCB (\3/16),((\3%16)*16)
+        FCB (\4/16),((\4%16)*16)
+        FCB (\5/16),((\5%16)*16)
+        FCB (\6/16),((\6%16)*16)
+        FCB (\7/16),((\7%16)*16)
+        FCB (\8/16),((\8%16)*16)
         ENDM
 
-SHIFT5   MACRO
-        FCB ((\1<<3)>>8)&$FF,((\1<<3)>>0)&$FF
-        FCB ((\2<<3)>>8)&$FF,((\2<<3)>>0)&$FF
-        FCB ((\3<<3)>>8)&$FF,((\3<<3)>>0)&$FF
-        FCB ((\4<<3)>>8)&$FF,((\4<<3)>>0)&$FF
-        FCB ((\5<<3)>>8)&$FF,((\5<<3)>>0)&$FF
-        FCB ((\6<<3)>>8)&$FF,((\6<<3)>>0)&$FF
-        FCB ((\7<<3)>>8)&$FF,((\7<<3)>>0)&$FF
-        FCB ((\8<<3)>>8)&$FF,((\8<<3)>>0)&$FF
+SHIFT5  MACRO
+        FCB (\1/32),((\1%32)*8)
+        FCB (\2/32),((\2%32)*8)
+        FCB (\3/32),((\3%32)*8)
+        FCB (\4/32),((\4%32)*8)
+        FCB (\5/32),((\5%32)*8)
+        FCB (\6/32),((\6%32)*8)
+        FCB (\7/32),((\7%32)*8)
+        FCB (\8/32),((\8%32)*8)
         ENDM
 
-SHIFT6   MACRO
-        FCB ((\1<<2)>>8)&$FF,((\1<<2)>>0)&$FF
-        FCB ((\2<<2)>>8)&$FF,((\2<<2)>>0)&$FF
-        FCB ((\3<<2)>>8)&$FF,((\3<<2)>>0)&$FF
-        FCB ((\4<<2)>>8)&$FF,((\4<<2)>>0)&$FF
-        FCB ((\5<<2)>>8)&$FF,((\5<<2)>>0)&$FF
-        FCB ((\6<<2)>>8)&$FF,((\6<<2)>>0)&$FF
-        FCB ((\7<<2)>>8)&$FF,((\7<<2)>>0)&$FF
-        FCB ((\8<<2)>>8)&$FF,((\8<<2)>>0)&$FF
+SHIFT6  MACRO
+        FCB (\1/64),((\1%64)*4)
+        FCB (\2/64),((\2%64)*4)
+        FCB (\3/64),((\3%64)*4)
+        FCB (\4/64),((\4%64)*4)
+        FCB (\5/64),((\5%64)*4)
+        FCB (\6/64),((\6%64)*4)
+        FCB (\7/64),((\7%64)*4)
+        FCB (\8/64),((\8%64)*4)
         ENDM
 
-SHIFT7   MACRO
-        FCB ((\1<<1)>>8)&$FF,((\1<<1)>>0)&$FF
-        FCB ((\2<<1)>>8)&$FF,((\2<<1)>>0)&$FF
-        FCB ((\3<<1)>>8)&$FF,((\3<<1)>>0)&$FF
-        FCB ((\4<<1)>>8)&$FF,((\4<<1)>>0)&$FF
-        FCB ((\5<<1)>>8)&$FF,((\5<<1)>>0)&$FF
-        FCB ((\6<<1)>>8)&$FF,((\6<<1)>>0)&$FF
-        FCB ((\7<<1)>>8)&$FF,((\7<<1)>>0)&$FF
-        FCB ((\8<<1)>>8)&$FF,((\8<<1)>>0)&$FF
+SHIFT7  MACRO
+        FCB (\1/128),((\1%128)*2)
+        FCB (\2/128),((\2%128)*2)
+        FCB (\3/128),((\3%128)*2)
+        FCB (\4/128),((\4%128)*2)
+        FCB (\5/128),((\5%128)*2)
+        FCB (\6/128),((\6%128)*2)
+        FCB (\7/128),((\7%128)*2)
+        FCB (\8/128),((\8%128)*2)
         ENDM
 
 GENTILE  MACRO
@@ -489,38 +489,81 @@ GENTILE  MACRO
 ; ALL 32 PRESHIFTED TILES
 ; ============================================================
 
-GENTILE tile_0,$00,$00,$00,$00,$00,$00,$00,$00
-GENTILE tile_1,$00,$00,$00,$00,$00,$00,$00,$00
-GENTILE tile_2,$00,$08,$00,$80,$00,$01,$00,$10
-GENTILE tile_3,$00,$18,$3C,$7E,$FF,$7E,$3C,$00
-GENTILE tile_4,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-GENTILE tile_5,$AA,$55,$FF,$FF,$FF,$FF,$FF,$FF
-GENTILE tile_6,$2A,$15,$3F,$3F,$3F,$3F,$3F,$3F
-GENTILE tile_7,$A8,$50,$FC,$FC,$FC,$FC,$FC,$FC
-GENTILE tile_8,$FF,$EF,$FF,$DF,$FD,$FF,$F7,$FF
-GENTILE tile_9,$FF,$FE,$FF,$FB,$FF,$BF,$FF,$FD
-GENTILE tile_10,$03,$07,$0F,$1F,$3F,$7F,$FF,$FF
-GENTILE tile_11,$00,$01,$03,$07,$0F,$1F,$3F,$7F
-GENTILE tile_12,$C0,$E0,$F0,$F8,$FC,$FE,$FF,$FF
-GENTILE tile_13,$00,$80,$C0,$E0,$F0,$F8,$FC,$FE
-GENTILE tile_14,$00,$00,$FF,$FF,$00,$00,$00,$00
-GENTILE tile_15,$00,$00,$3F,$3F,$00,$00,$00,$00
-GENTILE tile_16,$00,$00,$FC,$FC,$00,$00,$00,$00
-GENTILE tile_17,$18,$18,$18,$18,$18,$18,$18,$18
-GENTILE tile_18,$18,$18,$18,$18,$18,$3C,$3C,$3C
-GENTILE tile_19,$18,$3C,$7E,$FF,$FF,$7E,$3C,$18
-GENTILE tile_20,$00,$38,$7C,$FE,$FE,$7C,$38,$00
-GENTILE tile_21,$00,$24,$18,$7E,$18,$18,$3C,$00
-GENTILE tile_22,$00,$3C,$66,$C3,$C3,$66,$3C,$00
-GENTILE tile_23,$00,$3C,$3C,$18,$3C,$7E,$FF,$00
-GENTILE tile_24,$3C,$3C,$3C,$18,$18,$18,$3C,$3C
-GENTILE tile_25,$00,$24,$7E,$FF,$FF,$7E,$24,$00
-GENTILE tile_26,$00,$18,$7E,$FF,$FF,$7E,$18,$00
-GENTILE tile_27,$81,$00,$24,$00,$18,$00,$42,$00
-GENTILE tile_28,$00,$42,$00,$24,$00,$18,$00,$81
-GENTILE tile_29,$10,$00,$20,$00,$04,$00,$08,$00
-GENTILE tile_30,$00,$80,$00,$02,$00,$20,$00,$08
-GENTILE tile_31,$00,$18,$3C,$7E,$3C,$18,$00,$00
+        GENTILE tile_0,$00,$00,$00,$00,$00,$00,$00,$00
+        GENTILE tile_1,$00,$00,$00,$00,$00,$00,$00,$00
+        GENTILE tile_2,$00,$08,$00,$80,$00,$01,$00,$10
+        GENTILE tile_3,$00,$18,$3C,$7E,$FF,$7E,$3C,$00
+        GENTILE tile_4,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+        GENTILE tile_5,$AA,$55,$FF,$FF,$FF,$FF,$FF,$FF
+        GENTILE tile_6,$2A,$15,$3F,$3F,$3F,$3F,$3F,$3F
+        GENTILE tile_7,$A8,$50,$FC,$FC,$FC,$FC,$FC,$FC
+        GENTILE tile_8,$FF,$EF,$FF,$DF,$FD,$FF,$F7,$FF
+        GENTILE tile_9,$FF,$FE,$FF,$FB,$FF,$BF,$FF,$FD
+        GENTILE tile_10,$03,$07,$0F,$1F,$3F,$7F,$FF,$FF
+        GENTILE tile_11,$00,$01,$03,$07,$0F,$1F,$3F,$7F
+        GENTILE tile_12,$C0,$E0,$F0,$F8,$FC,$FE,$FF,$FF
+        GENTILE tile_13,$00,$80,$C0,$E0,$F0,$F8,$FC,$FE
+        GENTILE tile_14,$00,$00,$FF,$FF,$00,$00,$00,$00
+        GENTILE tile_15,$00,$00,$3F,$3F,$00,$00,$00,$00
+        GENTILE tile_16,$00,$00,$FC,$FC,$00,$00,$00,$00
+        GENTILE tile_17,$18,$18,$18,$18,$18,$18,$18,$18
+        GENTILE tile_18,$18,$18,$18,$18,$18,$3C,$3C,$3C
+        GENTILE tile_19,$18,$3C,$7E,$FF,$FF,$7E,$3C,$18
+        GENTILE tile_20,$00,$38,$7C,$FE,$FE,$7C,$38,$00
+        GENTILE tile_21,$00,$24,$18,$7E,$18,$18,$3C,$00
+        GENTILE tile_22,$00,$3C,$66,$C3,$C3,$66,$3C,$00
+        GENTILE tile_23,$00,$3C,$3C,$18,$3C,$7E,$FF,$00
+        GENTILE tile_24,$3C,$3C,$3C,$18,$18,$18,$3C,$3C
+        GENTILE tile_25,$00,$24,$7E,$FF,$FF,$7E,$24,$00
+        GENTILE tile_26,$00,$18,$7E,$FF,$FF,$7E,$18,$00
+        GENTILE tile_27,$81,$00,$24,$00,$18,$00,$42,$00
+        GENTILE tile_28,$00,$42,$00,$24,$00,$18,$00,$81
+        GENTILE tile_29,$10,$00,$20,$00,$04,$00,$08,$00
+        GENTILE tile_30,$00,$80,$00,$02,$00,$20,$00,$08
+        GENTILE tile_31,$00,$18,$3C,$7E,$3C,$18,$00,$00
+
+; ============================================================
+; LEVEL MAP 400x10
+; ============================================================
+; ============================================================
+; MAP ROW PATTERN MACROS
+; ============================================================
+
+ROW_CLOUDS  MACRO
+        FCB 1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1
+        ENDM
+
+ROW_SKY2  MACRO
+        FCB 1,2,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,2,1,1,1
+        ENDM
+
+ROW_PLATFORMS  MACRO
+        FCB 1,1,1,1,1,15,14,14,16,1,1,1,1,1,1,1,1,1,1,1,15,14,16,1,1,1,1,1,1,1,1,1
+        ENDM
+
+ROW_RINGS  MACRO
+        FCB 1,1,1,1,1,1,1,1,1,1,22,22,22,1,1,1,1,1,1,1,1,1,1,1,1,22,22,22,1,1,1,1
+        ENDM
+
+ROW_DECO_SKY  MACRO
+        FCB 1,1,27,1,1,1,28,1,1,1,29,1,1,1,30,1,1,1,31,1,1,1,27,1,1,1,28,1,1,1,29,1
+        ENDM
+
+ROW_SPARSE_PROPS  MACRO
+        FCB 1,1,1,1,19,1,1,20,1,1,21,1,1,18,1,1,24,1,1,25,1,1,26,1,1,19,1,1,20,1,1,1
+        ENDM
+
+ROW_GRASS_MID  MACRO
+        FCB 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+        ENDM
+
+ROW_DIRT_A  MACRO
+        FCB 8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4
+        ENDM
+
+ROW_DIRT_B  MACRO
+        FCB 9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4
+        ENDM
 
 ; ============================================================
 ; LEVEL MAP 400x10
@@ -529,61 +572,142 @@ GENTILE tile_31,$00,$18,$3C,$7E,$3C,$18,$00,$00
 level_map:
 
 ; row 0 sky
-REPT 400
-        FCB TILE_SKY
-ENDR
+        FILL TILE_SKY,400
 
 ; row 1 sparse clouds
-REPT 12
-        FCB 1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1
-ENDR
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
+        ROW_CLOUDS
         FCB 1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,3
 
 ; row 2 sky with sparse sky2 motifs
-REPT 12
-        FCB 1,2,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,2,1,1,1
-ENDR
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
+        ROW_SKY2
         FCB 1,2,1,1,1,1,2,1,1,1,1,1,2,1,1,1
 
 ; row 3 platforms
-REPT 12
-        FCB 1,1,1,1,1,15,14,14,16,1,1,1,1,1,1,1,1,1,1,1,15,14,16,1,1,1,1,1,1,1,1,1
-ENDR
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
+        ROW_PLATFORMS
         FCB 1,1,1,1,1,15,14,14,16,1,1,1,1,1,1,1
 
 ; row 4 rings
-REPT 12
-        FCB 1,1,1,1,1,1,1,1,1,1,22,22,22,1,1,1,1,1,1,1,1,1,1,1,1,22,22,22,1,1,1,1
-ENDR
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
+        ROW_RINGS
         FCB 1,1,1,1,1,1,1,1,1,1,22,22,22,1,1,1
 
 ; row 5 decorative sky
-REPT 12
-        FCB 1,1,27,1,1,1,28,1,1,1,29,1,1,1,30,1,1,1,31,1,1,1,27,1,1,1,28,1,1,1,29,1
-ENDR
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
+        ROW_DECO_SKY
         FCB 1,1,30,1,1,1,31,1,1,1,27,1,1,1,28,1
 
 ; row 6 sparse props
-REPT 12
-        FCB 1,1,1,1,19,1,1,20,1,1,21,1,1,18,1,1,24,1,1,25,1,1,26,1,1,19,1,1,20,1,1,1
-ENDR
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
+        ROW_SPARSE_PROPS
         FCB 1,21,1,1,18,1,1,24,1,1,25,1,1,26,1,1
 
 ; row 7 grass line
         FCB 6
-REPT 398
-        FCB 5
-ENDR
-        FCB 7
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        ROW_GRASS_MID
+        FCB 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,7
 
 ; row 8 dirt
-REPT 100
-        FCB 8,4,9,4
-ENDR
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        ROW_DIRT_A
+        FCB 8,4,9,4,8,4,9,4,8,4,9,4,8,4,9,4
 
 ; row 9 dirt
-REPT 100
-        FCB 9,4,8,4
-ENDR
-
-                END start
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        ROW_DIRT_B
+        FCB 9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4
+        
+        END start
