@@ -1,3 +1,3 @@
 #!/bin/bash
 
-lwasm  -r -I. --list=draw_poly_table.bin.list -o draw_poly_table.bin  draw_poly_table.asm
+lwasm  -r -I. --list=scrolling.bin.list -o scrolling.bin  scrolling.asm
