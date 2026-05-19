@@ -241,7 +241,7 @@ rv_after:
                 INC row_counter
                 LDA row_counter
                 CMPA #VIEW_H_TILES
-                BNE rv_row_loop
+                LBNE rv_row_loop
                 RTS
 
 get_tile_shift_ptr:
@@ -709,5 +709,5 @@ level_map:
         ROW_DIRT_B
         ROW_DIRT_B
         FCB 9,4,8,4,9,4,8,4,9,4,8,4,9,4,8,4
-        
+
         END start
