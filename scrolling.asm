@@ -21,15 +21,12 @@
 ; TO8 PARAMS TO FILL
 ; ============================================================
 
-GATE_REG_LO     EQU $E7DC
-GATE_REG_HI     EQU $E7DD
+GATE_MODE       EQU $46
+BORDER_COLOR    EQU $00
 
-GATE_MODE_LO    EQU $00          ; TODO
-GATE_MODE_HI    EQU $00          ; TODO
-
-VRAM_PLAN_A     EQU $4000        ; TODO
-VRAM_PLAN_B     EQU $6000        ; TODO
-SCREEN_STRIDE   EQU 40           ; TODO
+VRAM_PLAN_A     EQU $4000
+VRAM_PLAN_B     EQU $6000
+SCREEN_STRIDE   EQU 40
 
 ; ============================================================
 ; CONSTANTS
@@ -78,29 +75,12 @@ TILE_MOTIF3     EQU 29
 TILE_MOTIF4     EQU 30
 TILE_MOTIF5     EQU 31
 
-; ============================================================
-; RAM
-; ============================================================
-
-                ORG $2000
-
-cam_x           RMB 2
-tile_x          RMB 2
-shift_x         RMB 1
-row_counter     RMB 1
-col_counter     RMB 1
-map_ptr         RMB 2
-src_ptr         RMB 2
-dst_ptr_a       RMB 2
-dst_ptr_b       RMB 2
-world_col       RMB 2
-tmp0            RMB 1
 
 ; ============================================================
 ; CODE
 ; ============================================================
 
-                ORG $8000
+                ORG $A000
 
 start:
                 JSR init_video
@@ -112,10 +92,10 @@ main_loop:
                 BRA main_loop
 
 init_video:
-                LDA #GATE_MODE_LO
-                STA GATE_REG_LO
-                LDA #GATE_MODE_HI
-                STA GATE_REG_HI
+                LDA #GATE_MODE
+                STA DISPLAY_CTRL
+                LDA #BORDER_COLOR
+                STA GA_SYS2
                 RTS
 
 init_engine:
