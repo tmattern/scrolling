@@ -208,11 +208,11 @@ rv_after:
                 STD world_col
 
                 LDD dst_ptr_a
-                ADDD #1
+                ADDD #2
                 STD dst_ptr_a
 
                 LDD dst_ptr_b
-                ADDD #1
+                ADDD #2
                 STD dst_ptr_b
 
                 DEC col_counter
@@ -658,8 +658,7 @@ level_map:
         ROW_GRASS_MID
         ROW_GRASS_MID
         ROW_GRASS_MID
-        FCB 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,7
-
+        FCB 5,5,5,5,5,5,5,5,5,5,5,5,5,5,7
 ; row 8 dirt
         ROW_DIRT_A
         ROW_DIRT_A
