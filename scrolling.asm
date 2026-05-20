@@ -138,33 +138,27 @@ render_viewport_optimized:
 
 rv_row_loop:
                 ; map row base
-                LDA row_counter
-                ASLA
-                TFR A,B
-                CLRA
-                ADDD #map_row_table
-                TFR D,X
+                LDB row_counter
+                ASLB
+                LDX #map_row_table
+                ABX
                 LDD ,X
                 ADDD tile_x
                 STD map_ptr
 
                 ; screen row base A
-                LDA row_counter
-                ASLA
-                TFR A,B
-                CLRA
-                ADDD #screen_row_table_a
-                TFR D,X
+                LDB row_counter
+                ASLB
+                LDX #screen_row_table_a
+                ABX
                 LDD ,X
                 STD dst_ptr_a
 
                 ; screen row base B
-                LDA row_counter
-                ASLA
-                TFR A,B
-                CLRA
-                ADDD #screen_row_table_b
-                TFR D,X
+                LDB row_counter
+                ASLB
+                LDX #screen_row_table_b
+                ABX
                 LDD ,X
                 STD dst_ptr_b
 
@@ -184,7 +178,7 @@ rv_col_loop:
 
                 ; parity on world column
                 LDD world_col
-                ANDB #1
+                ANDD #1
                 BEQ rv_to_a
 
 rv_to_b:
@@ -193,6 +187,8 @@ rv_to_b:
                 BRA rv_after
 
 rv_to_a:
+
+                BRA rv_after              ; skip
                 LDY dst_ptr_a
                 BSR draw_tile_8x8_2bytes
 
@@ -292,40 +288,40 @@ draw_tile_8x8_2bytes:
 ; ============================================================
 
 screen_row_table_a:
-                FDB VRAM_PLAN_A + 0*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 1*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 2*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 3*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 4*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 5*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 6*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 7*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 8*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_A + 9*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+0*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+1*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+2*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+3*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+4*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+5*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+6*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+7*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+8*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_A+9*(8*SCREEN_STRIDE)
 
 screen_row_table_b:
-                FDB VRAM_PLAN_B + 0*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 1*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 2*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 3*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 4*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 5*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 6*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 7*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 8*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B + 9*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+0*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+1*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+2*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+3*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+4*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+5*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+6*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+7*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+8*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+9*(8*SCREEN_STRIDE)
 
 map_row_table:
-                FDB level_map + 0*MAP_W
-                FDB level_map + 1*MAP_W
-                FDB level_map + 2*MAP_W
-                FDB level_map + 3*MAP_W
-                FDB level_map + 4*MAP_W
-                FDB level_map + 5*MAP_W
-                FDB level_map + 6*MAP_W
-                FDB level_map + 7*MAP_W
-                FDB level_map + 8*MAP_W
-                FDB level_map + 9*MAP_W
+                FDB level_map+0*MAP_W
+                FDB level_map+1*MAP_W
+                FDB level_map+2*MAP_W
+                FDB level_map+3*MAP_W
+                FDB level_map+4*MAP_W
+                FDB level_map+5*MAP_W
+                FDB level_map+6*MAP_W
+                FDB level_map+7*MAP_W
+                FDB level_map+8*MAP_W
+                FDB level_map+9*MAP_W
 
 tile_addr_table:
                 FDB tile_0
@@ -367,47 +363,47 @@ tile_addr_table:
 ; ============================================================
 
 SHIFT0  MACRO
-        FCB \1,0
-        FCB \2,0
-        FCB \3,0
-        FCB \4,0
-        FCB \5,0
-        FCB \6,0
-        FCB \7,0
-        FCB \8,0
+        FCB 0,\1
+        FCB 0,\2
+        FCB 0,\3
+        FCB 0,\4
+        FCB 0,\5
+        FCB 0,\6
+        FCB 0,\7
+        FCB 0,\8
         ENDM
 
 SHIFT1  MACRO
-        FCB (\1/2),((\1%2)*128)
-        FCB (\2/2),((\2%2)*128)
-        FCB (\3/2),((\3%2)*128)
-        FCB (\4/2),((\4%2)*128)
-        FCB (\5/2),((\5%2)*128)
-        FCB (\6/2),((\6%2)*128)
-        FCB (\7/2),((\7%2)*128)
-        FCB (\8/2),((\8%2)*128)
+        FCB (\1/128),((\1%128)*2)
+        FCB (\2/128),((\2%128)*2)
+        FCB (\3/128),((\3%128)*2)
+        FCB (\4/128),((\4%128)*2)
+        FCB (\5/128),((\5%128)*2)
+        FCB (\6/128),((\6%128)*2)
+        FCB (\7/128),((\7%128)*2)
+        FCB (\8/128),((\8%128)*2)
         ENDM
 
 SHIFT2  MACRO
-        FCB (\1/4),((\1%4)*64)
-        FCB (\2/4),((\2%4)*64)
-        FCB (\3/4),((\3%4)*64)
-        FCB (\4/4),((\4%4)*64)
-        FCB (\5/4),((\5%4)*64)
-        FCB (\6/4),((\6%4)*64)
-        FCB (\7/4),((\7%4)*64)
-        FCB (\8/4),((\8%4)*64)
+        FCB (\1/64),((\1%64)*4)
+        FCB (\2/64),((\2%64)*4)
+        FCB (\3/64),((\3%64)*4)
+        FCB (\4/64),((\4%64)*4)
+        FCB (\5/64),((\5%64)*4)
+        FCB (\6/64),((\6%64)*4)
+        FCB (\7/64),((\7%64)*4)
+        FCB (\8/64),((\8%64)*4)
         ENDM
 
 SHIFT3  MACRO
-        FCB (\1/8),((\1%8)*32)
-        FCB (\2/8),((\2%8)*32)
-        FCB (\3/8),((\3%8)*32)
-        FCB (\4/8),((\4%8)*32)
-        FCB (\5/8),((\5%8)*32)
-        FCB (\6/8),((\6%8)*32)
-        FCB (\7/8),((\7%8)*32)
-        FCB (\8/8),((\8%8)*32)
+        FCB (\1/32),((\1%32)*8)
+        FCB (\2/32),((\2%32)*8)
+        FCB (\3/32),((\3%32)*8)
+        FCB (\4/32),((\4%32)*8)
+        FCB (\5/32),((\5%32)*8)
+        FCB (\6/32),((\6%32)*8)
+        FCB (\7/32),((\7%32)*8)
+        FCB (\8/32),((\8%32)*8)
         ENDM
 
 SHIFT4  MACRO
@@ -422,36 +418,36 @@ SHIFT4  MACRO
         ENDM
 
 SHIFT5  MACRO
-        FCB (\1/32),((\1%32)*8)
-        FCB (\2/32),((\2%32)*8)
-        FCB (\3/32),((\3%32)*8)
-        FCB (\4/32),((\4%32)*8)
-        FCB (\5/32),((\5%32)*8)
-        FCB (\6/32),((\6%32)*8)
-        FCB (\7/32),((\7%32)*8)
-        FCB (\8/32),((\8%32)*8)
+        FCB (\1/8),((\1%8)*32)
+        FCB (\2/8),((\2%8)*32)
+        FCB (\3/8),((\3%8)*32)
+        FCB (\4/8),((\4%8)*32)
+        FCB (\5/8),((\5%8)*32)
+        FCB (\6/8),((\6%8)*32)
+        FCB (\7/8),((\7%8)*32)
+        FCB (\8/8),((\8%8)*32)
         ENDM
 
 SHIFT6  MACRO
-        FCB (\1/64),((\1%64)*4)
-        FCB (\2/64),((\2%64)*4)
-        FCB (\3/64),((\3%64)*4)
-        FCB (\4/64),((\4%64)*4)
-        FCB (\5/64),((\5%64)*4)
-        FCB (\6/64),((\6%64)*4)
-        FCB (\7/64),((\7%64)*4)
-        FCB (\8/64),((\8%64)*4)
+        FCB (\1/4),((\1%4)*64)
+        FCB (\2/4),((\2%4)*64)
+        FCB (\3/4),((\3%4)*64)
+        FCB (\4/4),((\4%4)*64)
+        FCB (\5/4),((\5%4)*64)
+        FCB (\6/4),((\6%4)*64)
+        FCB (\7/4),((\7%4)*64)
+        FCB (\8/4),((\8%4)*64)
         ENDM
 
 SHIFT7  MACRO
-        FCB (\1/128),((\1%128)*2)
-        FCB (\2/128),((\2%128)*2)
-        FCB (\3/128),((\3%128)*2)
-        FCB (\4/128),((\4%128)*2)
-        FCB (\5/128),((\5%128)*2)
-        FCB (\6/128),((\6%128)*2)
-        FCB (\7/128),((\7%128)*2)
-        FCB (\8/128),((\8%128)*2)
+        FCB (\1/2),((\1%2)*128)
+        FCB (\2/2),((\2%2)*128)
+        FCB (\3/2),((\3%2)*128)
+        FCB (\4/2),((\4%2)*128)
+        FCB (\5/2),((\5%2)*128)
+        FCB (\6/2),((\6%2)*128)
+        FCB (\7/2),((\7%2)*128)
+        FCB (\8/2),((\8%2)*128)
         ENDM
 
 GENTILE  MACRO
