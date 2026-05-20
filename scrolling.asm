@@ -176,21 +176,28 @@ rv_col_loop:
 
                 BSR get_tile_shift_ptr
 
-                ; parity on world column
-                LDD world_col
-                ANDD #1
+                ; parity on col_counter
+                LDA col_counter
+                ANDA #1
                 BEQ rv_to_a
 
 rv_to_b:
                 LDY dst_ptr_b
                 BSR draw_tile_8x8_2bytes
+
+                LDD dst_ptr_b
+                ADDD #2
+                STD dst_ptr_b
+
                 BRA rv_after
 
 rv_to_a:
-
-                BRA rv_after              ; skip
                 LDY dst_ptr_a
                 BSR draw_tile_8x8_2bytes
+
+                LDD dst_ptr_a
+                ADDD #2
+                STD dst_ptr_a
 
 rv_after:
                 LDD map_ptr
@@ -200,14 +207,6 @@ rv_after:
                 LDD world_col
                 ADDD #1
                 STD world_col
-
-                LDD dst_ptr_a
-                ADDD #2
-                STD dst_ptr_a
-
-                LDD dst_ptr_b
-                ADDD #2
-                STD dst_ptr_b
 
                 DEC col_counter
                 BNE rv_col_loop
@@ -300,16 +299,16 @@ screen_row_table_a:
                 FDB VRAM_PLAN_A+9*(8*SCREEN_STRIDE)
 
 screen_row_table_b:
-                FDB VRAM_PLAN_B+0*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+1*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+2*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+3*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+4*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+5*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+6*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+7*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+8*(8*SCREEN_STRIDE)
-                FDB VRAM_PLAN_B+9*(8*SCREEN_STRIDE)
+                FDB VRAM_PLAN_B+0*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+1*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+2*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+3*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+4*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+5*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+6*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+7*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+8*(8*SCREEN_STRIDE)+1
+                FDB VRAM_PLAN_B+9*(8*SCREEN_STRIDE)+1
 
 map_row_table:
                 FDB level_map+0*MAP_W
