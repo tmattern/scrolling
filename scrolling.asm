@@ -1,3 +1,4 @@
+        OPT cd
         include "lib/hw/to8_hw.inc"
         include "lib/hw/to8_rom.inc"
         include "lib/variables.asm"
@@ -75,6 +76,101 @@ TILE_MOTIF3     EQU 29
 TILE_MOTIF4     EQU 30
 TILE_MOTIF5     EQU 31
 
+; ============================================================
+; COLUMN DRAW MACROS
+; ============================================================
+
+DRAW_FIRST_COL_TO_A MACRO
+                LDX map_ptr
+                LDA ,X
+                STA tmp0
+
+                LBSR get_tile_shift_ptr
+
+                LDY dst_ptr_a
+                LBSR draw_tile_8x8_rightbyte
+
+                LDD dst_ptr_a
+                ADDD #2
+                STD dst_ptr_a
+
+                LDD map_ptr
+                ADDD #1
+                STD map_ptr
+
+                LDD world_col
+                ADDD #1
+                STD world_col
+                ENDM
+
+DRAW_COL_TO_B MACRO
+                LDX map_ptr
+                LDA ,X
+                STA tmp0
+
+                LBSR get_tile_shift_ptr
+
+                LDY dst_ptr_b
+                LBSR draw_tile_8x8_2bytes
+
+                LDD dst_ptr_b
+                ADDD #2
+                STD dst_ptr_b
+
+                LDD map_ptr
+                ADDD #1
+                STD map_ptr
+
+                LDD world_col
+                ADDD #1
+                STD world_col
+                ENDM
+
+DRAW_COL_TO_A MACRO
+                LDX map_ptr
+                LDA ,X
+                STA tmp0
+
+                LBSR get_tile_shift_ptr
+
+                LDY dst_ptr_a
+                LBSR draw_tile_8x8_2bytes
+
+                LDD dst_ptr_a
+                ADDD #2
+                STD dst_ptr_a
+
+                LDD map_ptr
+                ADDD #1
+                STD map_ptr
+
+                LDD world_col
+                ADDD #1
+                STD world_col
+                ENDM
+
+DRAW_LAST_COL_TO_B MACRO
+                LDX map_ptr
+                LDA ,X
+                STA tmp0
+
+                LBSR get_tile_shift_ptr
+
+                LDY dst_ptr_b
+                LBSR draw_tile_8x8_leftbyte
+
+                LDD dst_ptr_b
+                ADDD #2
+                STD dst_ptr_b
+
+                LDD map_ptr
+                ADDD #1
+                STD map_ptr
+
+                LDD world_col
+                ADDD #1
+                STD world_col
+                ENDM
 
 ; ============================================================
 ; CODE
@@ -89,6 +185,10 @@ TILE_MOTIF5     EQU 31
 
 start:
                 JSR InitScreen
+                JSR ClearScreenRAMA
+                CLRA
+                JSR ClearScreenRAMB
+
                 JSR init_engine
 
 main_loop:
@@ -166,50 +266,38 @@ rv_row_loop:
                 LDD tile_x
                 STD world_col
 
-                LDA #VIEW_W_TILES
-                STA col_counter
-
-rv_col_loop:
-                LDX map_ptr
-                LDA ,X
-                STA tmp0
-
-                BSR get_tile_shift_ptr
-
-                ; parity on col_counter
-                LDA col_counter
-                ANDA #1
-                BEQ rv_to_a
-
-rv_to_b:
-                LDY dst_ptr_b
-                BSR draw_tile_8x8_2bytes
-
-                LDD dst_ptr_b
-                ADDD #2
-                STD dst_ptr_b
-
-                BRA rv_after
-
-rv_to_a:
-                LDY dst_ptr_a
-                BSR draw_tile_8x8_2bytes
-
-                LDD dst_ptr_a
-                ADDD #2
-                STD dst_ptr_a
-
-rv_after:
-                LDD map_ptr
-                ADDD #1
-                STD map_ptr
-
-                LDD world_col
-                ADDD #1
-                STD world_col
-
-                DEC col_counter
-                BNE rv_col_loop
+                DRAW_FIRST_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_COL_TO_B
+                DRAW_COL_TO_A
+                DRAW_LAST_COL_TO_B
 
                 INC row_counter
                 LDA row_counter
@@ -247,39 +335,87 @@ get_tile_shift_ptr:
 ; - D carries 2 bytes
 ; - LDD/STD preserve big-endian order
 draw_tile_8x8_2bytes:
-                LDD ,X++
-                STD ,Y
-                LEAY LINE_ADVANCE,Y
+                LDD 0,X
+                STD 0,Y
 
-                LDD ,X++
-                STD ,Y
-                LEAY LINE_ADVANCE,Y
+                LDD 2,X
+                STD LINE_ADVANCE,Y
 
-                LDD ,X++
-                STD ,Y
-                LEAY LINE_ADVANCE,Y
+                LDD 4,X
+                STD 2*LINE_ADVANCE,Y
 
-                LDD ,X++
-                STD ,Y
-                LEAY LINE_ADVANCE,Y
+                LDD 6,X
+                STD 3*LINE_ADVANCE,Y
 
-                LDD ,X++
-                STD ,Y
-                LEAY LINE_ADVANCE,Y
+                LDD 8,X
+                STD 4*LINE_ADVANCE,Y
 
-                LDD ,X++
-                STD ,Y
-                LEAY LINE_ADVANCE,Y
+                LDD 10,X
+                STD 5*LINE_ADVANCE,Y
 
-                LDD ,X++
-                STD ,Y
-                LEAY LINE_ADVANCE,Y
+                LDD 12,X
+                STD 6*LINE_ADVANCE,Y
 
-                LDD ,X++
-                STD ,Y
+                LDD 14,X
+                STD 7*LINE_ADVANCE,Y
+                RTS
+
+draw_tile_8x8_rightbyte:
+                LEAX 1,X                
+                LEAY 1,Y                
+                LDA 0,X
+                STA 0,Y
+
+                LDA 2,X
+                STA LINE_ADVANCE,Y
+
+                LDA 4,X
+                STA 2*LINE_ADVANCE,Y
+
+                LDA 6,X
+                STA 3*LINE_ADVANCE,Y
+
+                LDA 8,X
+                STA 4*LINE_ADVANCE,Y
+
+                LDA 10,X
+                STA 5*LINE_ADVANCE,Y
+
+                LDA 12,X
+                STA 6*LINE_ADVANCE,Y
+
+                LDA 14,X
+                STA 7*LINE_ADVANCE,Y
+                RTS
+
+draw_tile_8x8_leftbyte:
+                LDA 0,X
+                STA 0,Y
+
+                LDA 2,X
+                STA LINE_ADVANCE,Y
+
+                LDA 4,X
+                STA 2*LINE_ADVANCE,Y
+
+                LDA 6,X
+                STA 3*LINE_ADVANCE,Y
+
+                LDA 8,X
+                STA 4*LINE_ADVANCE,Y
+
+                LDA 10,X
+                STA 5*LINE_ADVANCE,Y
+
+                LDA 12,X
+                STA 6*LINE_ADVANCE,Y
+
+                LDA 14,X
+                STA 7*LINE_ADVANCE,Y
                 RTS
 
 
+                include "lib/clear_screen.asm"
                 include "lib/vbl.asm"
 
 ; ============================================================
